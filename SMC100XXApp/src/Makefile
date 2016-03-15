@@ -10,6 +10,7 @@ DBD += SMC100XXSupport.dbd
 SMC100XXSupport_DBD += base.dbd
 SMC100XXSupport_DBD += stream.dbd
 SMC100XXSupport_DBD += asyn.dbd
+SMC100XXSupport_DBD += SMC100XXSNC.dbd
 
 # Build an IOC support library
 LIBRARY_IOC += SMC100XXSupport
