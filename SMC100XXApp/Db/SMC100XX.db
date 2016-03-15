@@ -1,0 +1,157 @@
+#
+# SMC100XX.db
+#
+# Support for Newport SMC100CC and SMC100PP motor controllers.  Tested with 
+# the stepper motor version (SMC100PP).
+#
+# Macros:
+#   P    - pv prefix
+#   R    - pv prefix
+#   ADDR - controller address, [1-99]
+#   PORT - asyn port
+#
+# Author: Wesley Moore (wmoore@jlab.org)
+#
+
+record(asyn, "$(P)$(R)Asyn") {
+    field(PORT, "$(PORT)")
+}
+
+record(bo, "$(P)$(R)reset") {
+	field(DTYP, "stream")
+	field(OUT,  "@SMC100XX.proto reset($(ADDR)) $(PORT)")
+}
+
+record(bo, "$(P)$(R)stop") {
+	field(DTYP, "stream")
+	field(OUT,  "@SMC100XX.proto stop($(ADDR)) $(PORT)")
+}
+
+record(bo, "$(P)$(R)config") {
+	field(DTYP, "stream")
+	field(OUT,  "@SMC100XX.proto config($(ADDR)) $(PORT)")
+	field(ZNAM, "NOT REF")
+	field(ONAM, "CONFIG")
+}
+
+record(bo, "$(P)$(R)home") {
+	field(DTYP, "stream")
+	field(OUT,  "@SMC100XX.proto home($(ADDR)) $(PORT)")
+}
+
+record(ao, "$(P)$(R)mres") {
+	field(DTYP, "stream")
+	field(OUT,  "@SMC100XX.proto mres($(ADDR)) $(PORT)")
+	field(PREC, "3")
+}
+
+record(ao, "$(P)$(R)absPos") {
+	field(DTYP, "stream")
+	field(OUT,  "@SMC100XX.proto absPos($(ADDR)) $(PORT)")
+	field(PREC, "2")
+}
+
+record(ao, "$(P)$(R)relPos") {
+	field(DTYP, "stream")
+	field(OUT,  "@SMC100XX.proto relPos($(ADDR)) $(PORT)")
+	field(PREC, "2")
+}
+
+record(ao, "$(P)$(R)velocity") {
+	field(DTYP, "stream")
+	field(OUT,  "@SMC100XX.proto velocity($(ADDR)) $(PORT)")
+	field(PREC, "3")
+}
+
+record(ao, "$(P)$(R)accel") {
+	field(DTYP, "stream")
+	field(OUT,  "@SMC100XX.proto accel($(ADDR)) $(PORT)")
+	field(PREC, "3")
+}
+
+record(stringout, "$(P)$(R)gen_cmd") {
+	field(DTYP, "stream")
+	field(VAL,  "")
+	field(OUT,  "@SMC100XX.proto gen_cmd $(PORT)")
+}
+
+record(stringout, "$(P)$(R)gen_query") {
+	field(DTYP, "stream")
+	field(FLNK, "$(P)$(R)gen_reply.VAL")
+	field(OUT,  "@SMC100XX.proto gen_query $(PORT)")
+}
+
+record(ai, "$(P)$(R)mresrbk") {
+	field(DTYP, "stream")
+	field(INP,  "@SMC100XX.proto mresrbk($(ADDR)) $(PORT)")
+	field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)accrbk") {
+	field(DTYP, "stream")
+	field(FLNK, "$(P)$(R)usteprbk.VAL")
+	field(INP,  "@SMC100XX.proto accrbk($(ADDR)) $(PORT)")
+	field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)velrbk") {
+	field(DTYP, "stream")
+	field(FLNK, "$(P)$(R)accrbk.VAL")
+	field(INP,  "@SMC100XX.proto velrbk($(ADDR)) $(PORT)")
+	field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)absPosRbk") {
+	field(SCAN, "1 second")
+	field(DTYP, "stream")
+	field(FLNK, "$(P)$(R)status.VAL")
+	field(INP,  "@SMC100XX.proto absPosRbk($(ADDR)) $(PORT)")
+	field(PREC, "5")
+}
+
+record(longin, "$(P)$(R)usteprbk") {
+	field(DTYP, "stream")
+	field(FLNK, "$(P)$(R)mresrbk.VAL")
+	field(INP,  "@SMC100XX.proto usteprbk($(ADDR)) $(PORT)")
+	field(EGU, "ustep/step")
+}
+
+record(stringin, "$(P)$(R)gen_reply") {
+	field(DTYP, "stream")
+	field(INP,  "@SMC100XX.proto gen_reply $(PORT)")
+}
+
+record(ai, "$(P)$(R)errorcode") {
+    field(DTYP, "stream")
+    field(INP,  "@SMC100XX.proto errorcode($(ADDR)) $(PORT)")
+    field(SCAN, "1 second")
+}
+
+record(ai, "$(P)$(R)status") {
+    field(DTYP, "stream")
+    field(INP,  "@SMC100XX.proto status($(ADDR)) $(PORT)")
+    field(SCAN, "I/O Intr")
+} 
+
+record(longout, "$(P)$(R)ustep") {
+	field(DTYP, "stream")
+	field(OUT,  "@SMC100XX.proto ustep($(ADDR)) $(PORT)")
+	field(DOL,  "1")
+	field(OMSL, "supervisory")
+	field(EGU,  "usteps/step")
+}
+
+#
+# Used by statusDecoder.st
+#
+record(bo, "$(P)$(R)movingStat") {
+	field(ZNAM, "Stopped")
+	field(ONAM, "Moving")
+	field(ZSV,  "MAJOR")
+	field(OSV,  "NO_ALARM")
+	field(COSV, "NO_ALARM")
+}
+
+record(stringin, "$(P)$(R)statusMsg") {
+}
+

@@ -1,0 +1,47 @@
+CONTENTS OF THIS FILE
+---------------------
+
+ * Description
+ * Brief
+ * Installation
+ * Pinout
+
+DESCRIPTION
+-----------
+
+The SMC100CC and SMC100PP are Single-Axis Motion Controllers/Drivers for 
+DC or Stepper Motors.
+
+
+BRIEF
+-----
+
+These motor drivers communicate to EPICS using RS232.  The motor drivers 
+however, can be chained together using a local RS485.  
+
+
+INSTALLATION
+------------
+
+When adding a SMC100PP to an existing chain, you must first set the RS485 
+address.  The SMC.exe utility program that comes with the drives provides this 
+functionality.  See "3.2 Communication Settings" on page 9, for the port 
+settings required to talk to the driver.  See "3.4.1 Controller Address 
+Setting" on page 12, to set the address.
+
+
+PINOUT
+------
+For connecting to Moxa 5650 series, using Emerson 40-9538F (DB9F-RJ45)
+
+db9 color
+1   yellow	
+2   green
+3   red
+4   white
+5   black
+6   blue
+7   brown
+8   orange
+9   (empty)
+

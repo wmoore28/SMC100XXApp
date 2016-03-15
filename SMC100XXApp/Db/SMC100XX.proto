@@ -1,0 +1,45 @@
+#
+# SMC100XX.proto
+#
+# Support for Newport SMC100CC and SMC100PP motor controllers.  Tested with 
+# the stepper motor version (SMC100PP).
+#
+# Author: Wesley Moore (wmoore@jlab.org)
+#
+
+OutTerminator = CR LF;
+InTerminator  = CR LF;
+replytimeout  = 150;
+readtimeout   = 150;
+writetimeout  = 50;
+
+accel     { out "\$1AC%f"; }
+accrbk    { out "\$1AC?"; in "\$1AC%f"; }
+ustep     { out "\$1FRM%d"; }
+usteprbk  { out "\$1FRM?"; in "\$1FRM%d"; }
+mres      { out "\$1FRS%f"; }
+mresrbk   { out "\$1FRS?"; in "\$1FRS%f"; }
+home      { out "\$1OR"; }
+absPos    { out "\$1PA%f"; }
+relPos    { out "\$1PR%f"; }
+config    { out "\$1PW%d"; }
+reset     { out "\$1RS"; }
+stop      { out "\$1ST"; }
+absPosRbk { out "\$1TP"; in "\$1TP%f"; }
+
+errorcode {
+    out "\$1TS";
+    in "\$1TS%04x%*02x";
+}
+
+status {
+    in "\$1TS%*04x%02x";
+}
+
+velocity  { out "\$1VA%f"; }
+velrbk    { out "\$1VA?"; in "\$1VA%f"; }
+
+gen_cmd   { out "%s"; }
+gen_query { out "%s"; }
+gen_reply { in "%s";  }
+
