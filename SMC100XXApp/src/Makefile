@@ -31,6 +31,7 @@ DBD += SMC100XX.dbd
 # SMC100XX.dbd will include these files:
 SMC100XX_DBD += base.dbd
 SMC100XX_DBD += SMC100XXSupport.dbd
+SMC100XX_DBD += asSupport.dbd
 
 # SMC100XX_registerRecordDeviceDriver.cpp derives from SMC100XX.dbd
 SMC100XX_SRCS += SMC100XX_registerRecordDeviceDriver.cpp
@@ -44,6 +45,7 @@ SMC100XX_SRCS_vxWorks += -nil-
 
 # Link in the code from our support library
 SMC100XX_LIBS += SMC100XXSupport
+SMC100XX_LIBS += autosave
 SMC100XX_LIBS += stream
 SMC100XX_LIBS += asyn
 SMC100XX_LIBS += seq pv

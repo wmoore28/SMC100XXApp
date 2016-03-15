@@ -1,0 +1,9 @@
+# Newport SMC100CC/PP settings
+$(P)config
+$(P)accel
+$(P)velocity
+$(P)mres
+$(P)ustep
+$(P)absPos
+$(P)relPos
+$(P)absPos.DRVH
